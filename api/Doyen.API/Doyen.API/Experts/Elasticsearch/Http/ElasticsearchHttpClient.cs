@@ -1,18 +1,29 @@
 ﻿using Doyen.API.Experts.Elasticsearch.Settings;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http.Headers;
 using System.Text;
 
 namespace Doyen.API.Experts.Elasticsearch.Http
 {
+    [ExcludeFromCodeCoverage]
+    /// <summary>
+    /// Represents an HTTP client for making requests to Elasticsearch.
+    /// </summary>
     public class ElasticsearchHttpClient : IElasticsearchHttpClient
     {
         private readonly IElasticsearchSettings settings;
 
+        /// <summary>
+        /// Initializes a new instance of the ElasticsearchHttpClient class.
+        /// </summary>
+        /// <param name="elasticsearchSettings">The Elasticsearch settings.</param>
+        /// <exception cref="ArgumentNullException">Thrown when elasticsearchSettings is null.</exception>
         public ElasticsearchHttpClient(IElasticsearchSettings elasticsearchSettings)
         {
             settings = elasticsearchSettings ?? throw new ArgumentNullException(nameof(elasticsearchSettings));
         }
 
+        /// <inheritdoc />
         public async Task<string> SendSearchPostRequest(string requestBody)
         {
             using HttpClientHandler httpClientHandler = new()
